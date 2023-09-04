@@ -1,0 +1,36 @@
+{
+  "name": "collabwaveapi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development nodemon ./server.js",
+    "start": "cross-env NODE_ENV=development node ./server.js",
+    "lint": "eslint **/*.js",
+    "lint:fix": "eslint --fix **/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CollabWave/CollabWaveAPI.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CollabWave/CollabWaveAPI/issues"
+  },
+  "homepage": "https://github.com/CollabWave/CollabWaveAPI#readme",
+  "dependencies": {
+    "axios": "^1.5.0",
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mongoose": "^7.5.0",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.48.0",
+    "nodemon": "^3.0.1"
+  }
+}
