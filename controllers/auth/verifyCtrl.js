@@ -19,12 +19,21 @@ const verifyCtrl = async (req, res) => {
       !info.location ||
       !info.phone ||
       !info.language ||
-      info.socialLinks.length === 0
+      info.blogLanguages.length === 0
     ) {
       throw RequestError(400, "All required fields must be filled");
     }
-
+    if (
+      !info.socialLinks.facebook &&
+      !info.socialLinks.youtube &&
+      !info.socialLinks.instagram &&
+      !info.socialLinks.tiktok &&
+      !info.socialLinks.telegram
+    ) {
+      throw RequestError(400, "Social Links fields must be filled");
+    }
     user.info = {
+      type: info.type,
       gender: info.gender,
       birthDate: {
         date: info.birthDate.date,
@@ -35,19 +44,42 @@ const verifyCtrl = async (req, res) => {
       phone: info.phone,
       language: info.language,
       socialLinks: info.socialLinks,
-      activity: info.activity,
+      about: info.about,
+      education: info.education,
+      blogLanguages: info.blogLanguages,
     };
   } else if (user.role === "brand") {
-    if (!info.company || !info.location || !info.phone || !info.language) {
+    if (
+      !info.company.name ||
+      !info.birthDate.date ||
+      !info.birthDate.month ||
+      !info.birthDate.year ||
+      !info.location ||
+      !info.phone ||
+      !info.language
+    ) {
       throw RequestError(400, "All required fields must be filled");
     }
-
+    if (
+      !info.socialLinks.facebook &&
+      !info.socialLinks.youtube &&
+      !info.socialLinks.instagram &&
+      !info.socialLinks.tiktok &&
+      !info.socialLinks.telegram
+    ) {
+      throw RequestError(400, "Social Links fields must be filled");
+    }
     user.info = {
-      company: info.company,
+      type: "brand",
+      company: {
+        name: info.company.name,
+        url: info.company.url,
+      },
+      socialLinks: info.socialLinks,
       location: info.location,
       phone: info.phone,
       language: info.language,
-      site: info.site,
+      task: info.task,
     };
   } else {
     throw RequestError(400, "Role not found");

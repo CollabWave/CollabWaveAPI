@@ -8,10 +8,27 @@ const brandSchema = new Schema(
       default: "brand",
     },
     company: {
-      type: String,
-      default: "",
+      type: { name: String, url: String },
+      default: { name: "", url: "" },
+      _id: false,
     },
-
+    socialLinks: {
+      type: {
+        facebook: String,
+        youtube: String,
+        instagram: String,
+        tiktok: String,
+        telegram: String,
+      },
+      default: {
+        facebook: "",
+        youtube: "",
+        instagram: "",
+        tiktok: "",
+        telegram: "",
+      },
+      _id: false,
+    },
     location: {
       type: String,
       default: "",
@@ -25,12 +42,12 @@ const brandSchema = new Schema(
       enum: ["en", "ru", "uk"],
       default: "en",
     },
-    site: {
+    task: {
       type: String,
       default: "",
     },
   },
-  { versionKey: false }
+  { versionKey: false, _id: false }
 );
 
 brandSchema.post("save", handleError);

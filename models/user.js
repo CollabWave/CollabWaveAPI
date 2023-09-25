@@ -5,29 +5,30 @@ const userSchema = new Schema(
   {
     firstName: {
       type: String,
-      required: true,
+      default: "",
     },
     lastName: {
       type: String,
-      required: true,
+      default: "",
     },
     email: {
       type: String,
-      required: true,
+      default: "",
     },
     password: {
       type: String,
-      required: true,
+      default: "",
     },
 
     role: {
       type: String,
-      enum: ["admin", "blogger", "brand", ""],
-      default: "",
+      enum: ["admin", "blogger", "brand"],
+      required: true,
     },
     info: {
       type: Schema.Types.Mixed,
       select: false,
+      _id: false,
     },
     verify: {
       type: Boolean,
@@ -36,6 +37,10 @@ const userSchema = new Schema(
     verificationToken: {
       type: String,
       default: "",
+    },
+    auth: {
+      type: String,
+      enum: ["email", "google"],
     },
   },
   { versionKey: false }

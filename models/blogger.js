@@ -5,7 +5,8 @@ const bloggerSchema = new Schema(
   {
     type: {
       type: String,
-      default: "blogger",
+      enum: ["food", "sport", ""],
+      default: "",
     },
     gender: {
       type: String,
@@ -23,6 +24,7 @@ const bloggerSchema = new Schema(
         month: 0,
         year: 0,
       },
+      _id: false,
     },
     location: {
       type: String,
@@ -37,19 +39,51 @@ const bloggerSchema = new Schema(
       enum: ["en", "ru", "uk"],
       default: "en",
     },
-    socialLinks: [
-      {
-        type: String,
-        enum: ["facebook", "twitter", "instagram", "youtube"],
+
+    socialLinks: {
+      type: {
+        facebook: String,
+        youtube: String,
+        instagram: String,
+        tiktok: String,
+        telegram: String,
       },
-    ],
-    activity: [
+      default: {
+        facebook: "",
+        youtube: "",
+        instagram: "",
+        tiktok: "",
+        telegram: "",
+      },
+      _id: false,
+    },
+    about: {
+      type: String,
+      default: "",
+    },
+    education: {
+      type: String,
+      default: "",
+    },
+    blogLanguages: [
       {
         type: String,
+        enum: [
+          "english",
+          "russian",
+          "ukrainian",
+          "french",
+          "spanish",
+          "german",
+        ],
+        default: "english",
       },
     ],
   },
-  { versionKey: false }
+  {
+    versionKey: false,
+    _id: false,
+  }
 );
 
 bloggerSchema.post("save", handleError);

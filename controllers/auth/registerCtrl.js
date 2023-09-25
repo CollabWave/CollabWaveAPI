@@ -1,46 +1,43 @@
-const { User, Brand, Blogger } = require("../../models");
+const { User, Blogger, Brand } = require("../../models");
 const { RequestError } = require("../../helpers");
 const bcrypt = require("bcryptjs");
 
 const registerCtrl = async (req, res) => {
   const { firstName, lastName, email, password, role } = req.body;
-  const user = await User.findOne({ email });
-  if (user) {
-    throw RequestError(409, "Email in use");
+
+  const existingUser = await User.findOne({ email });
+
+  if (existingUser) {
+    throw RequestError(400, "Email already exists");
   }
   const hashPassword = await bcrypt.hash(password, 10);
-
-  let newUser;
-
+  let user;
   if (role === "blogger") {
-    newUser = await User.create({
+    user = await User.create({
       firstName,
       lastName,
       email,
       password: hashPassword,
       role,
       info: new Blogger(),
+      auth: "email",
     });
   } else if (role === "brand") {
-    newUser = await User.create({
+    user = await User.create({
       firstName,
       lastName,
       email,
       password: hashPassword,
       role,
       info: new Brand(),
-    });
-  } else {
-    newUser = await User.create({
-      firstName,
-      lastName,
-      email,
-      password: hashPassword,
-      role,
+      auth: "email",
     });
   }
+  if (!user) {
+    throw RequestError(404, "Invalid request body");
+  }
 
-  res.status(201).json({ status: "success", data: newUser });
+  res.status(201).json({ status: "success", data: user });
 };
 
 module.exports = registerCtrl;
