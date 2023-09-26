@@ -33,8 +33,8 @@ const getChannelStatistics = (channelId) => {
     .then((response) => {
       const channelStats = response.data.items[0].statistics;
       const subscriberCount = channelStats.subscriberCount;
-      console.log(`Subscriber Count: ${subscriberCount}`);
-      return subscriberCount;
+      // console.log(`Subscriber Count: ${subscriberCount}`);
+      return Number(subscriberCount);
     })
     .catch((error) => {
       console.error("Error fetching channel statistics:", error);

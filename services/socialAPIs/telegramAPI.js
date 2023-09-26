@@ -4,9 +4,12 @@ const token = process.env.TELEGRAM_TOKEN;
 const telegram = new Telegram(token);
 
 const getFollowers = async (name) => {
-  const data = await telegram.getChatMembersCount(`@${name}`);
-  console.log("channel followers count: ", data);
-  return data;
+  try {
+    const data = await telegram.getChatMembersCount(`@${name}`);
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 module.exports = getFollowers;

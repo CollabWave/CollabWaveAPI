@@ -20,10 +20,9 @@ const getFollowersCount = async (instaName) => {
       elements.slice(0, 3).map((el) => el.textContent)
     );
 
-    console.log(`Numbers of posts: ${values[0]}`);
-    console.log(`Followers: ${values[1]}`);
-    console.log(`Following: ${values[2]}`);
-    return values;
+    values[1];
+    const followers = Number(values[1].replace(/\s/g, ""));
+    return followers;
   } catch (error) {
     console.error("An error occurred:", error);
   } finally {

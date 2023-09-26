@@ -27,7 +27,7 @@ const verifyCtrl = async (req, res) => {
     const followersData = await checkSocialMediaFollowers(info.socialLinks);
     console.log(followersData);
 
-    if (!followersData.some(({ followers }) => followers > 1000)) {
+    if (!followersData.some(({ followers }) => followers >= 1000)) {
       throw RequestError(
         400,
         "None of the social networks has more than 1000 subscribers."
