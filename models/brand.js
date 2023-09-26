@@ -12,23 +12,23 @@ const brandSchema = new Schema(
       default: { name: "", url: "" },
       _id: false,
     },
-    socialLinks: {
-      type: {
-        facebook: String,
-        youtube: String,
-        instagram: String,
-        tiktok: String,
-        telegram: String,
+    socialLinks: [
+      {
+        platform: {
+          type: String,
+          enum: ["facebook", "youtube", "instagram", "tiktok", "telegram"],
+          required: true,
+        },
+        username: {
+          type: String,
+          default: "",
+        },
+        followers: {
+          type: Number,
+          default: 0,
+        },
       },
-      default: {
-        facebook: "",
-        youtube: "",
-        instagram: "",
-        tiktok: "",
-        telegram: "",
-      },
-      _id: false,
-    },
+    ],
     location: {
       type: String,
       default: "",

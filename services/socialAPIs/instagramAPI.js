@@ -1,8 +1,6 @@
 const puppeteer = require("puppeteer");
 const locateChrome = require("locate-chrome");
 
-const username = "cristiano"; // test
-
 const getFollowersCount = async (instaName) => {
   const executablePath = await new Promise((resolve) =>
     locateChrome((arg) => resolve(arg))
@@ -25,13 +23,12 @@ const getFollowersCount = async (instaName) => {
     console.log(`Numbers of posts: ${values[0]}`);
     console.log(`Followers: ${values[1]}`);
     console.log(`Following: ${values[2]}`);
+    return values;
   } catch (error) {
     console.error("An error occurred:", error);
   } finally {
     await browser.close();
   }
 };
-
-getFollowersCount(username);
 
 module.exports = getFollowersCount;

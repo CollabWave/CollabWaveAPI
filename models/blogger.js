@@ -40,23 +40,24 @@ const bloggerSchema = new Schema(
       default: "en",
     },
 
-    socialLinks: {
-      type: {
-        facebook: String,
-        youtube: String,
-        instagram: String,
-        tiktok: String,
-        telegram: String,
+    socialLinks: [
+      {
+        platform: {
+          type: String,
+          enum: ["facebook", "youtube", "instagram", "tiktok", "telegram"],
+          required: true,
+        },
+        username: {
+          type: String,
+          default: "",
+        },
+        followers: {
+          type: Number,
+          default: 0,
+        },
       },
-      default: {
-        facebook: "",
-        youtube: "",
-        instagram: "",
-        tiktok: "",
-        telegram: "",
-      },
-      _id: false,
-    },
+    ],
+
     about: {
       type: String,
       default: "",
@@ -65,20 +66,11 @@ const bloggerSchema = new Schema(
       type: String,
       default: "",
     },
-    blogLanguages: [
-      {
-        type: String,
-        enum: [
-          "english",
-          "russian",
-          "ukrainian",
-          "french",
-          "spanish",
-          "german",
-        ],
-        default: "english",
-      },
-    ],
+    blogLanguage: {
+      type: String,
+      enum: ["english", "russian", "ukrainian", "french", "spanish", "german"],
+      default: "english",
+    },
   },
   {
     versionKey: false,

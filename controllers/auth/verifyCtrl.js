@@ -1,6 +1,7 @@
 const { User } = require("../../models");
 const { RequestError } = require("../../helpers");
 const { v4: uuid } = require("uuid");
+const { checkSocialMediaFollowers } = require("../../services/socialAPIs");
 
 const verifyCtrl = async (req, res) => {
   const { userId } = req.params;
@@ -19,19 +20,20 @@ const verifyCtrl = async (req, res) => {
       !info.location ||
       !info.phone ||
       !info.language ||
-      info.blogLanguages.length === 0
+      info.socialLinks.length === 0
     ) {
       throw RequestError(400, "All required fields must be filled");
     }
-    if (
-      !info.socialLinks.facebook &&
-      !info.socialLinks.youtube &&
-      !info.socialLinks.instagram &&
-      !info.socialLinks.tiktok &&
-      !info.socialLinks.telegram
-    ) {
-      throw RequestError(400, "Social Links fields must be filled");
+    const followersData = await checkSocialMediaFollowers(info.socialLinks);
+    console.log(followersData);
+
+    if (!followersData.some(({ followers }) => followers > 1000)) {
+      throw RequestError(
+        400,
+        "None of the social networks has more than 1000 subscribers."
+      );
     }
+
     user.info = {
       type: info.type,
       gender: info.gender,
@@ -43,10 +45,10 @@ const verifyCtrl = async (req, res) => {
       location: info.location,
       phone: info.phone,
       language: info.language,
-      socialLinks: info.socialLinks,
+      socialLinks: followersData,
       about: info.about,
       education: info.education,
-      blogLanguages: info.blogLanguages,
+      blogLanguage: info.blogLanguage,
     };
   } else if (user.role === "brand") {
     if (
@@ -56,21 +58,13 @@ const verifyCtrl = async (req, res) => {
       !info.birthDate.year ||
       !info.location ||
       !info.phone ||
-      !info.language
+      !info.language ||
+      info.socialLinks.length === 0
     ) {
       throw RequestError(400, "All required fields must be filled");
     }
-    if (
-      !info.socialLinks.facebook &&
-      !info.socialLinks.youtube &&
-      !info.socialLinks.instagram &&
-      !info.socialLinks.tiktok &&
-      !info.socialLinks.telegram
-    ) {
-      throw RequestError(400, "Social Links fields must be filled");
-    }
+
     user.info = {
-      type: "brand",
       company: {
         name: info.company.name,
         url: info.company.url,
@@ -84,7 +78,8 @@ const verifyCtrl = async (req, res) => {
   } else {
     throw RequestError(400, "Role not found");
   }
-
+  user.verificationToken = uuid();
+  user.verify = true;
   await user.save();
 
   res.status(200).json({ status: "success", data: user });

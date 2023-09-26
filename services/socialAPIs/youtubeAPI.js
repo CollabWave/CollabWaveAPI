@@ -1,8 +1,6 @@
-require("dotenv").config({ path: "../../.env" });
 const axios = require("axios");
-
+require("dotenv").config();
 const apiKey = process.env.YOUTUBE_API_KEY;
-const channel = "GOALACTION"; //test
 
 const getChannelId = (apiUrl) => {
   return axios
@@ -36,6 +34,7 @@ const getChannelStatistics = (channelId) => {
       const channelStats = response.data.items[0].statistics;
       const subscriberCount = channelStats.subscriberCount;
       console.log(`Subscriber Count: ${subscriberCount}`);
+      return subscriberCount;
     })
     .catch((error) => {
       console.error("Error fetching channel statistics:", error);
@@ -45,13 +44,11 @@ const getChannelStatistics = (channelId) => {
 const getYoutubeSubscribersCount = (channelName) => {
   const apiUrl = `https://www.googleapis.com/youtube/v3/search?key=${apiKey}&q=${channelName}&type=channel`;
 
-  getChannelId(apiUrl).then((channelId) => {
+  return getChannelId(apiUrl).then((channelId) => {
     if (channelId) {
-      getChannelStatistics(channelId);
+      return getChannelStatistics(channelId);
     }
   });
 };
-
-getYoutubeSubscribersCount(channel);
 
 module.exports = getYoutubeSubscribersCount;

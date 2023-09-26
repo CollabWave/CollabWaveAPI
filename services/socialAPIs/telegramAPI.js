@@ -1,15 +1,12 @@
-require("dotenv").config({ path: "../../.env" });
 const Telegram = require("telegraf/telegram");
-
+require("dotenv").config();
 const token = process.env.TELEGRAM_TOKEN;
-
 const telegram = new Telegram(token);
 
-const getFollowers = async (chatId) => {
-  const data = await telegram.getChatMembersCount(chatId);
+const getFollowers = async (name) => {
+  const data = await telegram.getChatMembersCount(`@${name}`);
   console.log("channel followers count: ", data);
+  return data;
 };
-
-getFollowers("@MaketFigma");
 
 module.exports = getFollowers;

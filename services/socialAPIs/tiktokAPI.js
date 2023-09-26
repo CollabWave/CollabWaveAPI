@@ -1,7 +1,5 @@
 const tiktok = require("tiktok-private-api");
 
-const name = "timotiusmul"; //test
-
 const getTikTokFollowersCount = async (username) => {
   const scraper = new tiktok.TikTokClient();
 
@@ -10,7 +8,5 @@ const getTikTokFollowersCount = async (username) => {
   console.log("channel followers count: ", followersCount);
   return followersCount;
 };
-
-getTikTokFollowersCount(name);
 
 module.exports = getTikTokFollowersCount;
