@@ -1,9 +1,8 @@
-const { auth } = require("google-auth-library");
-require("dotenv").config({ path: "../.env" });
+require("dotenv").config({ path: "../../.env" });
 const axios = require("axios");
 
 const apiKey = process.env.YOUTUBE_API_KEY;
-//const channel = "artichevskymaksim6183";
+const channel = "GOALACTION"; //test
 
 const getChannelId = (apiUrl) => {
   return axios
@@ -53,6 +52,6 @@ const getYoutubeSubscribersCount = (channelName) => {
   });
 };
 
-//getYoutubeSubscribersCount(channel);
+getYoutubeSubscribersCount(channel);
 
 module.exports = getYoutubeSubscribersCount;
