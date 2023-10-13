@@ -23,9 +23,9 @@ async function checkSocialMediaFollowers(socialLinks) {
     if (network.platform === "youtube") {
       followers = await getYoutubeFollowers(network.username);
     }
-    if (!followers) {
-      throw RequestError(404, `Acount name ${network.platform} is not valid`);
-    }
+    // if (!followers) {
+    //   throw RequestError(404, `Acount name ${network.platform} is not valid`);
+    // }
     followersData.push({
       platform: network.platform,
       username: network.username,
