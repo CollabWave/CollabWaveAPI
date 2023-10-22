@@ -11,26 +11,32 @@ async function checkSocialMediaFollowers(socialLinks) {
   const followersData = [];
   for (const network of socialLinks) {
     let followers;
-    if (network.platform === "instagram") {
-      followers = await getInstagramFollowers(network.username);
+    try {
+      if (network.platform === "instagram") {
+        followers = await getInstagramFollowers(network.username);
+      }
+      if (network.platform === "telegram") {
+        followers = await getTelegramFollowers(network.username);
+      }
+      if (network.platform === "tiktok") {
+        followers = await getTiktokFollowers(network.username);
+      }
+      if (network.platform === "youtube") {
+        followers = await getYoutubeFollowers(network.username);
+      }
+
+      followersData.push({
+        platform: network.platform,
+        username: network.username,
+        followers,
+      });
+    } catch (error) {
+      console.error(`An error occurred for ${network.platform}:`, error);
+      throw RequestError(
+        500,
+        `Internal Server Error for ${network.platform}. ${error} `
+      );
     }
-    if (network.platform === "telegram") {
-      followers = await getTelegramFollowers(network.username);
-    }
-    if (network.platform === "tiktok") {
-      followers = await getTiktokFollowers(network.username);
-    }
-    if (network.platform === "youtube") {
-      followers = await getYoutubeFollowers(network.username);
-    }
-    // if (!followers) {
-    //   throw RequestError(404, `Acount name ${network.platform} is not valid`);
-    // }
-    followersData.push({
-      platform: network.platform,
-      username: network.username,
-      followers,
-    });
   }
   return followersData;
 }

@@ -11,6 +11,9 @@ const loginController = async (req, res) => {
   if (!user) {
     throw RequestError(403, "Email or password is wrong");
   }
+  if (!user.auth || user.auth === "google") {
+    throw RequestError(400, "Choose another login method");
+  }
   const passwordCompare = await bCrypt.compare(password, user.password);
 
   if (!passwordCompare) {

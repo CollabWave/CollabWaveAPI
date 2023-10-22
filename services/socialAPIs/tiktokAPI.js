@@ -1,4 +1,5 @@
 const tiktok = require("tiktok-private-api");
+const { RequestError } = require("../../helpers");
 
 const getTikTokFollowersCount = async (username) => {
   try {
@@ -10,6 +11,7 @@ const getTikTokFollowersCount = async (username) => {
     return followersCount;
   } catch (error) {
     console.error(error);
+    throw RequestError(500, error);
   }
 };
 

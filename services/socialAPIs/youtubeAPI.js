@@ -1,5 +1,5 @@
 const axios = require("axios");
-require("dotenv").config();
+const { RequestError } = require("../../helpers");
 const apiKey = process.env.YOUTUBE_API_KEY;
 
 const getChannelId = (apiUrl) => {
@@ -16,14 +16,14 @@ const getChannelId = (apiUrl) => {
     })
     .catch((error) => {
       console.error("Error:", error);
-      return null;
+      throw RequestError(500, error);
     });
 };
 
 const getChannelStatistics = (channelId) => {
   if (!channelId) {
     console.log("Channel ID is not available.");
-    return;
+    throw RequestError(500, "Channel ID is not available.");
   }
 
   const statsApiUrl = `https://www.googleapis.com/youtube/v3/channels?key=${apiKey}&id=${channelId}&part=statistics`;
@@ -33,11 +33,15 @@ const getChannelStatistics = (channelId) => {
     .then((response) => {
       const channelStats = response.data.items[0].statistics;
       const subscriberCount = channelStats.subscriberCount;
-      // console.log(`Subscriber Count: ${subscriberCount}`);
+      console.log(subscriberCount);
+      if (!subscriberCount) {
+        throw RequestError(404, "Account or followers not found");
+      }
       return Number(subscriberCount);
     })
     .catch((error) => {
       console.error("Error fetching channel statistics:", error);
+      throw RequestError(500, error);
     });
 };
 
@@ -45,9 +49,10 @@ const getYoutubeSubscribersCount = (channelName) => {
   const apiUrl = `https://www.googleapis.com/youtube/v3/search?key=${apiKey}&q=${channelName}&type=channel`;
 
   return getChannelId(apiUrl).then((channelId) => {
-    if (channelId) {
-      return getChannelStatistics(channelId);
+    if (!channelId) {
+      throw RequestError(404);
     }
+    return getChannelStatistics(channelId);
   });
 };
 

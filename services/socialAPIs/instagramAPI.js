@@ -1,5 +1,6 @@
 const puppeteer = require("puppeteer");
 const locateChrome = require("locate-chrome");
+const { RequestError } = require("../../helpers");
 
 const getFollowersCount = async (instaName) => {
   const executablePath = await new Promise((resolve) =>
@@ -20,11 +21,14 @@ const getFollowersCount = async (instaName) => {
       elements.slice(0, 3).map((el) => el.textContent)
     );
 
-    values[1];
     const followers = Number(values[1].replace(/\s/g, ""));
+    if (!followers) {
+      throw RequestError(404, "Account or followers not found");
+    }
     return followers;
   } catch (error) {
     console.error("An error occurred:", error);
+    throw RequestError(500, error);
   } finally {
     await browser.close();
   }

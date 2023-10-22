@@ -1,5 +1,5 @@
 const Telegram = require("telegraf/telegram");
-require("dotenv").config();
+const { RequestError } = require("../../helpers");
 const token = process.env.TELEGRAM_TOKEN;
 const telegram = new Telegram(token);
 
@@ -9,6 +9,7 @@ const getFollowers = async (name) => {
     return data;
   } catch (error) {
     console.error(error);
+    throw RequestError(500, error);
   }
 };
 
