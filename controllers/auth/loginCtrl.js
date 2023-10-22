@@ -2,6 +2,7 @@ const bCrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { RequestError } = require("../../helpers");
 const { User } = require("../../models");
+const { JWT_SECRET_KEY } = process.env;
 
 const loginController = async (req, res) => {
   const { email, password } = req.body;
@@ -19,7 +20,9 @@ const loginController = async (req, res) => {
     throw RequestError(401, "User not verified");
   }
   const payload = { id: user._id };
-  const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "24h" });
+  const token = jwt.sign(payload, JWT_SECRET_KEY, {
+    expiresIn: "24h",
+  });
   const data = await User.findByIdAndUpdate(user._id, { token }, { new: true });
   res.status(200).json({ status: "success", data });
 };

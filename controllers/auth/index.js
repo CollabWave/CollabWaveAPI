@@ -6,10 +6,10 @@ const googleAuthCtrl = require("./googleAuthCtrl");
 const googleRedirectCtrl = require("./googleRedirectCtrl");
 
 module.exports = {
-  loginCtrl,
   registerCtrl,
   logoutCtrl,
   googleAuthCtrl,
   googleRedirectCtrl,
   verifyCtrl,
+  loginCtrl,
 };

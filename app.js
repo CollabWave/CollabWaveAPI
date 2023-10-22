@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
@@ -5,7 +6,6 @@ const authRouter = require("./routes/auth");
 const session = require("express-session");
 const app = express();
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
-require("dotenv").config();
 const { SESSION_KEY } = process.env;
 
 app.use(logger(formatsLogger));
