@@ -6,6 +6,7 @@ const { checkSocialMediaFollowers } = require("../../services/socialAPIs");
 const verifyCtrl = async (req, res) => {
   const { userId } = req.params;
   const { info } = req.body;
+  console.log(req.body);
 
   const user = await User.findById(userId);
   if (!user) {
