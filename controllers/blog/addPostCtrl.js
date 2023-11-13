@@ -9,7 +9,7 @@ const addPostCtrl = async (req, res) => {
   const { path: tempUpload, originalname } = req.file;
 
   const extention = originalname.split(".").pop();
-  const filename = `${req.body.swag}.${extention}`;
+  const filename = `${req.body.slug}.${extention}`;
 
   const resultUpload = await Jimp.read(tempUpload);
   resultUpload.resize(517, 570).write(path.join(imagesDir, filename));

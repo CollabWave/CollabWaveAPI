@@ -12,7 +12,7 @@ const blogPostSchema = new Schema(
       type: String,
       default: "",
     },
-    swag: {
+    slug: {
       type: String,
       default: "",
     },
