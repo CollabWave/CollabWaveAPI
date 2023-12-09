@@ -12,5 +12,14 @@ const getFollowers = async (name) => {
     throw RequestError(500, error);
   }
 };
+// const getChatInfo = async (name) => {
+//   try {
+//     const chatInfo = await telegram.getChat(name);
+//     return chatInfo;
+//   } catch (error) {
+//     console.error(error);
+//     throw RequestError(500, error);
+//   }
+// };
 
-module.exports = getFollowers;
+module.exports = { getFollowers };

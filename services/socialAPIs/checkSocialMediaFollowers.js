@@ -1,6 +1,6 @@
 const getInstagramFollowers = require("./instagramAPI");
 const getYoutubeFollowers = require("./youtubeAPI");
-const getTelegramFollowers = require("./telegramAPI");
+const { getFollowers } = require("./telegramAPI");
 const getTiktokFollowers = require("./tiktokAPI");
 const { RequestError } = require("../../helpers");
 
@@ -16,7 +16,7 @@ async function checkSocialMediaFollowers(socialLinks) {
         followers = await getInstagramFollowers(network.username);
       }
       if (network.platform === "telegram") {
-        followers = await getTelegramFollowers(network.username);
+        followers = await getFollowers(network.username);
       }
       if (network.platform === "tiktok") {
         followers = await getTiktokFollowers(network.username);
