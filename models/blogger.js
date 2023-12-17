@@ -5,7 +5,6 @@ const bloggerSchema = new Schema(
   {
     type: {
       type: String,
-      enum: ["food", "sport", ""],
       default: "",
     },
     gender: {
