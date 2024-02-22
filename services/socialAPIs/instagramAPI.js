@@ -21,11 +21,22 @@ const getFollowersCount = async (instaName) => {
       elements.slice(0, 3).map((el) => el.textContent)
     );
 
-    const followers = Number(values[1].replace(/\s/g, ""));
+    const followers = values[1];
+    let followersCount = 0;
+
     if (!followers) {
       throw RequestError(404, "Account or followers not found");
     }
-    return followers;
+    const numericString = followers.replace(/\D/g, "");
+
+    if (followers.includes("K")) {
+      followersCount = parseInt(numericString) * 1000;
+    } else if (followers.includes("M")) {
+      followersCount = parseInt(numericString) * 1000000;
+    } else {
+      followersCount = parseInt(numericString);
+    }
+    return followersCount;
   } catch (error) {
     console.error("An error occurred:", error);
     throw RequestError(500, error);
