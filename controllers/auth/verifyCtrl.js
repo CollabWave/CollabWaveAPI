@@ -1,7 +1,6 @@
 const { User } = require("../../models");
 const { RequestError } = require("../../helpers");
 const { v4: uuid } = require("uuid");
-const { checkSocialMediaFollowers } = require("../../services/socialAPIs");
 
 const verifyCtrl = async (req, res) => {
   const { userId } = req.params;
@@ -9,10 +8,11 @@ const verifyCtrl = async (req, res) => {
   console.log(req.body);
 
   const user = await User.findById(userId);
+
   if (!user) {
     throw RequestError(404, "User not found");
   }
-  if (user.role === "blogger") {
+  if (user.role === "blogger" && user.socialLinks) {
     if (
       !info.gender ||
       !info.birthDate.date ||
@@ -20,19 +20,9 @@ const verifyCtrl = async (req, res) => {
       !info.birthDate.year ||
       !info.location ||
       !info.phone ||
-      !info.language ||
-      info.socialLinks.length === 0
+      !info.language
     ) {
       throw RequestError(400, "All required fields must be filled");
-    }
-    const followersData = await checkSocialMediaFollowers(info.socialLinks);
-    console.log(followersData);
-
-    if (!followersData.some(({ followers }) => followers >= 1000)) {
-      throw RequestError(
-        400,
-        "None of the social networks has more than 1000 subscribers."
-      );
     }
 
     user.info = {
@@ -46,7 +36,6 @@ const verifyCtrl = async (req, res) => {
       location: info.location,
       phone: info.phone,
       language: info.language,
-      socialLinks: followersData,
       about: info.about,
       education: info.education,
       blogLanguage: info.blogLanguage,
@@ -59,8 +48,7 @@ const verifyCtrl = async (req, res) => {
       !info.birthDate.year ||
       !info.location ||
       !info.phone ||
-      !info.language ||
-      info.socialLinks.length === 0
+      !info.language
     ) {
       throw RequestError(400, "All required fields must be filled");
     }
@@ -70,14 +58,13 @@ const verifyCtrl = async (req, res) => {
         name: info.company.name,
         url: info.company.url,
       },
-      socialLinks: info.socialLinks,
       location: info.location,
       phone: info.phone,
       language: info.language,
       task: info.task,
     };
   } else {
-    throw RequestError(400, "Role not found");
+    throw RequestError(400, "Bad Request");
   }
   user.verificationToken = uuid();
   user.verify = true;

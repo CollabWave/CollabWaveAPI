@@ -39,23 +39,7 @@ const bloggerSchema = new Schema(
       default: "en",
     },
 
-    socialLinks: [
-      {
-        platform: {
-          type: String,
-          enum: ["facebook", "youtube", "instagram", "tiktok", "telegram"],
-          required: true,
-        },
-        username: {
-          type: String,
-          default: "",
-        },
-        followers: {
-          type: Number,
-          default: 0,
-        },
-      },
-    ],
+   
 
     about: {
       type: String,

@@ -19,6 +19,23 @@ const userSchema = new Schema(
       type: String,
       default: "",
     },
+    socialLinks: [
+      {
+        platform: {
+          type: String,
+          enum: ["facebook", "youtube", "instagram", "tiktok", "telegram"],
+          required: true,
+        },
+        username: {
+          type: String,
+          default: "",
+        },
+        followers: {
+          type: Number,
+          default: 0,
+        },
+      },
+    ],
 
     role: {
       type: String,

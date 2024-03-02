@@ -28,7 +28,7 @@ const getFollowersCount = async (instaName) => {
       throw RequestError(404, "Account or followers not found");
     }
     const numericString = followers.replace(/\D/g, "");
-
+    console.log(numericString);
     if (followers.includes("K")) {
       followersCount = parseInt(numericString) * 1000;
     } else if (followers.includes("M")) {
@@ -36,6 +36,7 @@ const getFollowersCount = async (instaName) => {
     } else {
       followersCount = parseInt(numericString);
     }
+    console.log(followersCount);
     return followersCount;
   } catch (error) {
     console.error("An error occurred:", error);
@@ -44,5 +45,4 @@ const getFollowersCount = async (instaName) => {
     await browser.close();
   }
 };
-
 module.exports = getFollowersCount;

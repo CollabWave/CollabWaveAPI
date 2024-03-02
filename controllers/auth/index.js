@@ -4,6 +4,7 @@ const verifyCtrl = require("./verifyCtrl");
 const logoutCtrl = require("./logoutCtrl");
 const googleAuthCtrl = require("./googleAuthCtrl");
 const googleRedirectCtrl = require("./googleRedirectCtrl");
+const checkFollowersCtrl = require("./checkFollowersCtrl");
 
 module.exports = {
   registerCtrl,
@@ -12,4 +13,5 @@ module.exports = {
   googleRedirectCtrl,
   verifyCtrl,
   loginCtrl,
+  checkFollowersCtrl,
 };

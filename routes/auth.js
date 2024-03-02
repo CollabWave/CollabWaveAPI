@@ -6,6 +6,7 @@ const {
   verifyCtrl,
   googleAuthCtrl,
   googleRedirectCtrl,
+  checkFollowersCtrl,
 } = require("../controllers/auth");
 const { ctrlrWrapper } = require("../helpers");
 const { auth } = require("../middlewares");
@@ -13,6 +14,7 @@ const { auth } = require("../middlewares");
 const router = express.Router();
 
 router.post("/register", ctrlrWrapper(registerCtrl));
+router.post("/check-followers/:userId", ctrlrWrapper(checkFollowersCtrl));
 router.post("/verify/:userId", ctrlrWrapper(verifyCtrl));
 router.post("/login", ctrlrWrapper(loginCtrl));
 router.post("/logout", auth, ctrlrWrapper(logoutCtrl));
