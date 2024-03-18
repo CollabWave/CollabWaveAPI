@@ -22,6 +22,9 @@ app.use(
     secret: SESSION_KEY,
     resave: false,
     saveUninitialized: true,
+    cookie: {
+      httpOnly: false,
+    },
   })
 );
 app.use("/api/auth", authRouter);
