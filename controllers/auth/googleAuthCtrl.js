@@ -15,7 +15,8 @@ const googleAuth = async (req, res) => {
     access_type: "offline",
     prompt: "consent",
   });
-  console.log(req.session);
+
+  console.log(process.env.BASE_URL);
   return res.redirect(
     `https://accounts.google.com/o/oauth2/v2/auth?${stringifiedParams}`
   );
