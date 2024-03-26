@@ -5,6 +5,8 @@ const logoutCtrl = require("./logoutCtrl");
 const googleAuthCtrl = require("./googleAuthCtrl");
 const googleRedirectCtrl = require("./googleRedirectCtrl");
 const checkFollowersCtrl = require("./checkFollowersCtrl");
+const forgotPasswordCtrl = require("./forgotPasswordCtrl");
+const changePasswordCtrl = require("./changePasswordCtrl");
 
 module.exports = {
   registerCtrl,
@@ -14,4 +16,6 @@ module.exports = {
   verifyCtrl,
   loginCtrl,
   checkFollowersCtrl,
+  forgotPasswordCtrl,
+  changePasswordCtrl,
 };
