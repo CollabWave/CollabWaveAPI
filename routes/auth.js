@@ -7,6 +7,7 @@ const {
   googleAuthCtrl,
   googleRedirectCtrl,
   checkFollowersCtrl,
+  forgotPasswordCtrl,
 } = require("../controllers/auth");
 const { ctrlrWrapper } = require("../helpers");
 const { auth } = require("../middlewares");
@@ -20,5 +21,6 @@ router.post("/login", ctrlrWrapper(loginCtrl));
 router.post("/logout", auth, ctrlrWrapper(logoutCtrl));
 router.get("/google", ctrlrWrapper(googleAuthCtrl));
 router.get("/google-redirect", ctrlrWrapper(googleRedirectCtrl));
+router.post("/forgot-password", ctrlrWrapper(forgotPasswordCtrl));
 
 module.exports = router;
